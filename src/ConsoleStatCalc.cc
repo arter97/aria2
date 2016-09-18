@@ -121,11 +121,9 @@ void printSizeProgress(ColorizedStream& o,
   else
 #endif // ENABLE_BITTORRENT
   {
-    o << sizeFormatter(rg->getCompletedLength()) << "B/"
-      << sizeFormatter(rg->getTotalLength()) << "B";
     if (rg->getTotalLength() > 0) {
-      o << colors::cyan << "("
-        << 100 * rg->getCompletedLength() / rg->getTotalLength() << "%)";
+      o << colors::cyan
+        << 1000 * rg->getCompletedLength() / rg->getTotalLength() << "%";
       o << colors::clear;
     }
   }
