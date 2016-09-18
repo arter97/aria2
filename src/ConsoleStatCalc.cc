@@ -139,7 +139,7 @@ void printProgressCompact(ColorizedStream& o, const DownloadEngine* e,
     int dl = netstat.calculateDownloadSpeed();
     int ul = netstat.calculateUploadSpeed();
     o << colors::magenta << "[" << colors::clear << "DL:" << colors::green
-      << sizeFormatter(dl) << "B" << colors::clear;
+      << sizeFormatter(dl) << "B/s" << colors::clear;
     if (ul) {
       o << " UL:" << colors::cyan << sizeFormatter(ul) << "B" << colors::clear;
     }
@@ -187,7 +187,7 @@ void printProgress(ColorizedStream& o, const std::shared_ptr<RequestGroup>& rg,
 #endif // ENABLE_BITTORRENT
 
   if (!rg->downloadFinished()) {
-    o << " DL:" << colors::green << sizeFormatter(stat.downloadSpeed) << "B"
+    o << " DL:" << colors::green << sizeFormatter(stat.downloadSpeed) << "B/s"
       << colors::clear;
   }
   if (stat.sessionUploadLength > 0) {
