@@ -249,7 +249,7 @@ void printProgressSummary(const RequestGroupList& groups, size_t cols,
 }
 } // namespace
 
-ConsoleStatCalc::ConsoleStatCalc(std::chrono::seconds summaryInterval,
+ConsoleStatCalc::ConsoleStatCalc(std::chrono::milliseconds summaryInterval,
                                  bool colorOutput, bool humanReadable)
     : summaryInterval_(std::move(summaryInterval)),
       readoutVisibility_(true),
@@ -272,7 +272,7 @@ ConsoleStatCalc::ConsoleStatCalc(std::chrono::seconds summaryInterval,
 void ConsoleStatCalc::calculateStat(const DownloadEngine* e)
 {
   if (cp_.difference(global::wallclock()) + A2_DELTA_MILLIS <
-      std::chrono::milliseconds(1000)) {
+      std::chrono::milliseconds(100)) {
     return;
   }
   cp_ = global::wallclock();
