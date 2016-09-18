@@ -311,9 +311,11 @@ void ConsoleStatCalc::calculateStat(const DownloadEngine* e)
       global::cout()->flush();
     }
   }
-  if (!readoutVisibility_) {
-    return;
-  }
+
+  // Stats get printed twice.
+  // Return here as the rest of the code is not needed for arkTube anyways.
+  return;
+
   size_t numGroup = e->getRequestGroupMan()->countRequestGroup();
   const bool color = global::cout()->supportsColor() && isTTY_ && colorOutput_;
   if (numGroup == 1) {
