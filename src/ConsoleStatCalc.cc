@@ -225,10 +225,6 @@ public:
     printProgress(o, rg, e_, sizeFormatter_);
     const std::vector<std::shared_ptr<FileEntry>>& fileEntries =
         rg->getDownloadContext()->getFileEntries();
-    o << "\nFILE: ";
-    writeFilePath(fileEntries.begin(), fileEntries.end(), o,
-                  rg->inMemoryDownload());
-    o << "\n" << std::setfill(SEP_CHAR) << std::setw(cols_) << SEP_CHAR << "\n";
     auto str = o.str(false);
     global::cout()->write(str.c_str());
   }
@@ -244,23 +240,9 @@ void printProgressSummary(const RequestGroupList& groups, size_t cols,
   time_t now;
   time(&now);
   std::stringstream o;
-  o << " *** Download Progress Summary";
-  {
-    time_t now;
-    struct tm* staticNowtmPtr;
-    char buf[26];
-    if (time(&now) != (time_t)-1 &&
-        (staticNowtmPtr = localtime(&now)) != nullptr &&
-        asctime_r(staticNowtmPtr, buf) != nullptr) {
-      char* lfptr = strchr(buf, '\n');
-      if (lfptr) {
-        *lfptr = '\0';
-      }
-      o << " as of " << buf;
-    }
-  }
-  o << " *** \n" << std::setfill(SEP_CHAR) << std::setw(cols) << SEP_CHAR
-    << "\n";
+
+  o << "DOWNLOAD PROGRESS SUMMARY ";
+
   global::cout()->write(o.str().c_str());
   std::for_each(groups.begin(), groups.end(),
                 PrintSummary(cols, e, sizeFormatter));
