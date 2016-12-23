@@ -270,7 +270,7 @@ ConsoleStatCalc::ConsoleStatCalc(std::chrono::milliseconds summaryInterval,
 void ConsoleStatCalc::calculateStat(const DownloadEngine* e)
 {
   if (cp_.difference(global::wallclock()) + A2_DELTA_MILLIS <
-      std::chrono::milliseconds(100)) {
+      std::chrono::milliseconds(500)) {
     return;
   }
   cp_ = global::wallclock();
