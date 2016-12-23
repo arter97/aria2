@@ -1106,7 +1106,7 @@ RPC Options
   extension is '.torrent'. For metalink, it is '.meta4'.  If false is
   given to this option, the downloads added by
   :func:`aria2.addTorrent` or :func:`aria2.addMetalink` will not be
-  saved by :option:`--save-session` option. Default: ``false``
+  saved by :option:`--save-session` option. Default: ``true``
 
 .. option:: --rpc-secret=<TOKEN>
 
@@ -1391,6 +1391,15 @@ Advanced Options
     system doesn't have :manpage:`getifaddrs(3)`, this option doesn't accept interface
     name.
 
+.. option:: --keep-unfinished-download-result[=true|false]
+
+  Keep unfinished download results even if doing so exceeds
+  :option:`--max-download-result`.  This is useful if all unfinished
+  downloads must be saved in session file (see
+  :option:`--save-session` option).  Please keep in mind that there is
+  no upper bound to the number of unfinished download result to keep.
+  If that is undesirable, turn this option off.  Default: ``true``
+
 .. option:: --max-download-result=<NUM>
 
   Set maximum number of download result kept in memory. The download
@@ -1400,8 +1409,10 @@ Advanced Options
   oldest download result is removed from the front of the queue and
   new one is pushed to the back. Setting big number in this option may
   result high memory consumption after thousands of
-  downloads. Specifying 0 means no download result is kept. Default:
-  ``1000``
+  downloads. Specifying 0 means no download result is kept.  Note that
+  unfinished downloads are kept in memory regardless of this option
+  value. See :option:`--keep-unfinished-download-result` option.
+  Default: ``1000``
 
 .. option:: --max-mmap-limit=<SIZE>
 
@@ -1946,6 +1957,43 @@ lines beginning ``#`` are treated as comments::
   in the configuration file. It is recommended to change file mode
   bits of the configuration file (e.g., ``chmod 600 aria2.conf``), so
   that other user cannot see the contents of the file.
+
+The environment variables, such as ``${HOME}``, are expanded by shell.
+This means that those variables used in configuration file are not
+expanded.  However, it is useful to ``${HOME}`` to refer user's home
+directory in configuration file to specify file paths.  Therefore,
+aria2 expands ``${HOME}`` found in the following option values to
+user's home directory:
+
+* :option:`ca-certificate <--ca-certificate>`
+* :option:`certificate <--certificate>`
+* :option:`dht-file-path <--dht-file-path>`
+* :option:`dht-file-path6 <--dht-file-path6>`
+* :option:`dir <--dir>`
+* :option:`input-file <--input-file>`
+* :option:`load-cookies <--load-cookies>`
+* :option:`log <--log>`
+* :option:`metalink-file <--metalink-file>`
+* :option:`netrc-path <--netrc-path>`
+* :option:`on-bt-download-complete <--on-bt-download-complete>`
+* :option:`on-download-complete <--on-download-complete>`
+* :option:`on-download-error <--on-download-error>`
+* :option:`on-download-start <--on-download-start>`
+* :option:`on-download-stop <--on-download-stop>`
+* :option:`on-download-pause <--on-download-pause>`
+* :option:`out <--out>`
+* :option:`private-key <--private-key>`
+* :option:`rpc-certificate <--rpc-certificate>`
+* :option:`rpc-private-key <--rpc-private-key>`
+* :option:`save-cookies <--save-cookies>`
+* :option:`save-session <--save-session>`
+* :option:`server-stat-if <--server-stat-if>`
+* :option:`server-stat-of <--server-stat-of>`
+* :option:`torrent-file <--torrent-file>`
+
+Note that this expansion occurs even if the above options are used in
+the command-line.  This means that expansion may occur 2 times: first,
+shell and then aria2c.
 
 dht.dat
 ~~~~~~~~
@@ -3240,6 +3288,7 @@ For information on the *secret* parameter, see :ref:`rpc_auth`.
 
   * :option:`bt-max-open-files <--bt-max-open-files>`
   * :option:`download-result <--download-result>`
+  * :option:`keep-unfinished-download-result <--keep-unfinished-download-result>`
   * :option:`log <-l>`
   * :option:`log-level <--log-level>`
   * :option:`max-concurrent-downloads <-j>`
