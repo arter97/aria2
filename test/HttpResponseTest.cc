@@ -131,7 +131,7 @@ void HttpResponseTest::testGetContentType()
   httpHeader->put(HttpHeader::CONTENT_TYPE,
                   "application/metalink+xml; charset=UTF-8");
   httpResponse.setHttpHeader(std::move(httpHeader));
-  // See paramter is ignored.
+  // See parameter is ignored.
   CPPUNIT_ASSERT_EQUAL(std::string("application/metalink+xml"),
                        httpResponse.getContentType());
 }
@@ -148,7 +148,7 @@ void HttpResponseTest::testDetermineFilename_without_ContentDisposition()
   httpResponse.setHttpRequest(std::move(httpRequest));
 
   CPPUNIT_ASSERT_EQUAL(std::string("aria2-1.0.0.tar.bz2"),
-                       httpResponse.determineFilename());
+                       httpResponse.determineFilename(false));
 }
 
 void HttpResponseTest::
@@ -166,7 +166,7 @@ void HttpResponseTest::
   httpResponse.setHttpRequest(std::move(httpRequest));
 
   CPPUNIT_ASSERT_EQUAL(std::string("aria2-1.0.0.tar.bz2"),
-                       httpResponse.determineFilename());
+                       httpResponse.determineFilename(false));
 }
 
 void HttpResponseTest::testDetermineFilename_with_ContentDisposition()
@@ -184,7 +184,7 @@ void HttpResponseTest::testDetermineFilename_with_ContentDisposition()
   httpResponse.setHttpRequest(std::move(httpRequest));
 
   CPPUNIT_ASSERT_EQUAL(std::string("aria2-current.tar.bz2"),
-                       httpResponse.determineFilename());
+                       httpResponse.determineFilename(false));
 }
 
 void HttpResponseTest::testGetRedirectURI_without_Location()

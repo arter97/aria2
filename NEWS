@@ -1,121 +1,62 @@
-aria2 1.30.0
+aria2 1.32.0
 ============
 
 Release Note
 ------------
 
-This release fixes several bugs.  See Changes below for detailed bug
-fixes.  This release adds an ability to expand `${HOME}` to user's
-home directory in several options.  It would be useful when used in
-configuration file.  -S option against torrent file now prints out DHT
-nodes.
+This release fixes several minor bugs, and spelling mistakes.
 
 Changes
 -------
 
-* mingw: Use sqlite 3.15.2
+* Clarify --max-concurrent-downloads option
 
-* Fix bug that --disable-websocket causes build error
+  GH-833
 
-* Fix bug that lower bound of optimize-concurrent-downloads becomes 1
+* Fix compile error with toolchain which lacks IPV6_TCLASS
 
-  GH-798
+  GH-895
 
-* Print DHT nodes with -S option
+* Log directed URI in notice log level
 
-  GH-795
+  GH-884
 
-* Take into account address family when resolving DHT node address
+* Fix typo
 
-  GH-794
+  Patch from Tse Kit Yam
 
-* Allow block device file to -i option
+  GH-879, GH-899
 
-  GH-785
+* Spelling fixes
 
-* Expand `${HOME}` to user's home directory in several options
+  Patch from klemens
 
-  The following options implement this substitution:
+  GH-870
 
-  * --ca-certificate
-  * --certificate
-  * --dht-file-path
-  * --dht-file-path6
-  * --dir
-  * --input-file
-  * --load-cookies
-  * --log
-  * --metalink-file
-  * --netrc-path
-  * --on-bt-download-complete
-  * --on-download-complete
-  * --on-download-error
-  * --on-download-start
-  * --on-download-stop
-  * --on-download_pause
-  * --out
-  * --private-key
-  * --rpc-certificate
-  * --rpc-private-key
-  * --save-cookies
-  * --save-session
-  * --server-stat-if
-  * --server-stat-of
-  * --torrent-file
+* Remove unused Android parts
 
-  GH-780
+  These parts where unused after merging
+  https://github.com/aria2/aria2/pull/736
 
-* Document that libaria2 is not thread safe
+  Patch from Fredrik Fornwall
 
-  GH-775
+  GH-868
 
-* configure: Use pkg-config to find libs whenever possible
+* Save control file early
 
-  Use pkg-config to find cppunit, libxml2 and expat. All those
-  libraries provide pkg-config files, and in all of those cases the
-  pkg-config macro is superior to the custom macros used currently.
+  GH-859
 
-  The advantages of pkg-config files include:
+* Update links in Dockerfile.raspberrypi
 
-  - Explicit static linking support via --static. Currently, e.g.
-    'xml2-config --libs' prints all libraries needed for static
-    linking when doing dynamic linking unnecessary, resulting in
-    unnecessary direct deps.
+  Some links used in Dockerfile.raspberrypi are not accessible
+  anymore, because they were pointing to old versions of some source
+  packages and new versions were released.  This commit fixes this by
+  changing the links to point to the newest versions.
 
-  - Better cross-build support. You don't have to build the additional
-    *-config tools for target.
+  Patch from Michał Leśniewski
 
-  - Better multilib support. Per-ABI pkgconfig directories are
-    commonly supported while packages usually fail to look for
-    per-CHOST *-config variants.
+  GH-860
 
-  - Better override support. The current macros allow little to no
-    result overrides, the pkg-config macros let you pass FOO_CFLAGS
-    and FOO_LIBS manually.
+* Propagate disk full error on pre-allocation to last error code
 
-  - Cleaner version checks. The code used in libxml.m4 is really
-    creepy.
-
-  Patch from Michał Górny
-
-  GH-773
-
-* WinTLS: Rewrite writeData
-
-  We re-wrote WinTLSSession::writeData.  The major points are:
-
-  * Buffer is now preallocated once handshake is finished.
-    Previously, they are allocated each time when we send one TLS
-    record.
-
-  * Schannel uses header, body and trailer for each secBuffer.  Now we
-    send them off at once using WSASend which is windows counterpart
-    of sendv.  Previously, we do memmove if some of them are
-    truncated.
-
-  * We don't try to send application data in
-    WinTLSSession::closeConnection, since semantically we need same
-    application data used to create TLS record before.  Using 0 length
-    data to finish sending buffered data looks like a hack.
-
-  GH-772
+  GH-856

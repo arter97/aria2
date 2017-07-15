@@ -112,10 +112,11 @@ void HttpResponse::validateResponse() const
                      error_code::HTTP_PROTOCOL_ERROR);
 }
 
-std::string HttpResponse::determineFilename() const
+std::string HttpResponse::determineFilename(bool contentDispositionUTF8) const
 {
   std::string contentDisposition = util::getContentDispositionFilename(
-      httpHeader_->find(HttpHeader::CONTENT_DISPOSITION));
+      httpHeader_->find(HttpHeader::CONTENT_DISPOSITION),
+      contentDispositionUTF8);
   if (contentDisposition.empty()) {
     auto file = httpRequest_->getFile();
     file = util::percentDecode(file.begin(), file.end());
@@ -164,8 +165,8 @@ void HttpResponse::processRedirect()
         cuid_, req->getCurrentUri().c_str()));
   }
 
-  A2_LOG_INFO(fmt(MSG_REDIRECT, cuid_,
-                  httpRequest_->getRequest()->getCurrentUri().c_str()));
+  A2_LOG_NOTICE(fmt(MSG_REDIRECT, cuid_,
+                    httpRequest_->getRequest()->getCurrentUri().c_str()));
 }
 
 const std::string& HttpResponse::getRedirectURI() const
