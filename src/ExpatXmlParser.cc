@@ -34,7 +34,7 @@
 /* copyright --> */
 #include "ExpatXmlParser.h"
 
-#include <cstdio>
+////#include <cstdio>
 #include <cstring>
 
 #include "a2io.h"

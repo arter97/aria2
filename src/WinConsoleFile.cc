@@ -36,7 +36,7 @@
 #include "WinConsoleFile.h"
 
 #include <cstring>
-#include <cstdio>
+//#include <cstdio>
 #include <cstdarg>
 #include <vector>
 

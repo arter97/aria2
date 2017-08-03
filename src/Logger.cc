@@ -36,7 +36,7 @@
 
 #include <unistd.h>
 #include <cstring>
-#include <cstdio>
+//#include <cstdio>
 #include <cassert>
 
 #include "DlAbortEx.h"

@@ -35,7 +35,7 @@
 #include "fmt.h"
 
 #include <cstring>
-#include <cstdio>
+////#include <cstdio>
 #include <cstdlib>
 
 namespace aria2 {

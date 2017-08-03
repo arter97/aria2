@@ -35,7 +35,7 @@
 #include "DHTRoutingTableSerializer.h"
 
 #include <cstring>
-#include <cstdio>
+////#include <cstdio>
 
 #include "DHTNode.h"
 #include "DlAbortEx.h"

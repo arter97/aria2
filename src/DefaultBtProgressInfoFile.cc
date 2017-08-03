@@ -35,7 +35,7 @@
 #include "DefaultBtProgressInfoFile.h"
 
 #include <cstring>
-#include <cstdio>
+////#include <cstdio>
 
 #include "PieceStorage.h"
 #include "Piece.h"

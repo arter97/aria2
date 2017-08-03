@@ -36,7 +36,7 @@
 
 #include <cstring>
 #include <cassert>
-#include <cstdio>
+////#include <cstdio>
 #include <utility>
 
 #include "DHTNode.h"

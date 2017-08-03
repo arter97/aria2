@@ -35,7 +35,7 @@
 #include "daemon.h"
 
 #include <unistd.h>
-#include <cstdio>
+////#include <cstdio>
 #include <cstdlib>
 
 namespace aria2 {

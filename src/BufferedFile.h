@@ -37,7 +37,7 @@
 
 #include "IOFile.h"
 
-#include <cstdio>
+//////#include <cstdio>
 
 namespace aria2 {
 
