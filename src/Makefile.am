@@ -347,10 +347,6 @@ SRCS += \
 	InternalDHKeyExchange.cc InternalDHKeyExchange.h
 endif
 
-if USE_INTERNAL_ARC4
-SRCS += InternalARC4Encryptor.cc InternalARC4Encryptor.h
-endif
-
 if USE_INTERNAL_MD
 SRCS += \
 	InternalMessageDigestImpl.cc\
@@ -365,7 +361,6 @@ endif # HAVE_LIBGNUTLS
 
 if HAVE_LIBGCRYPT
 SRCS += \
-	LibgcryptARC4Encryptor.cc LibgcryptARC4Encryptor.h \
         LibgcryptDHKeyExchange.cc LibgcryptDHKeyExchange.h
 if USE_LIBGCRYPT_MD
 SRCS += LibgcryptMessageDigestImpl.cc
@@ -373,7 +368,6 @@ endif # USE_LIBGCRYPT_MD
 endif # HAVE_LIBGCRYPT
 
 if HAVE_LIBNETTLE
-SRCS += LibnettleARC4Encryptor.cc LibnettleARC4Encryptor.h
 if USE_LIBNETTLE_MD
 SRCS += LibnettleMessageDigestImpl.cc
 endif # USE_LIBNETTLE_MD
@@ -387,7 +381,6 @@ endif # HAVE_LIBGMP
 
 if HAVE_OPENSSL
 SRCS += \
-	LibsslARC4Encryptor.cc LibsslARC4Encryptor.h \
         LibsslDHKeyExchange.cc LibsslDHKeyExchange.h
 if !HAVE_APPLETLS
 SRCS += \
@@ -433,7 +426,6 @@ SRCS += \
 	ActivePeerConnectionCommand.cc ActivePeerConnectionCommand.h\
 	AnnounceList.h AnnounceList.cc\
 	AnnounceTier.cc AnnounceTier.h\
-	ARC4Encryptor.h\
 	bencode2.cc bencode2.h\
 	BencodeDiskWriter.h\
 	BencodeDiskWriterFactory.h\
