@@ -748,6 +748,10 @@
     "                              If SIZE is 15M, since 2*15M > 20MiB, aria2 does\n" \
     "                              not split file and download it using 1 source.\n" \
     "                              You can append K or M(1K = 1024, 1M = 1024K).")
+#define TEXT_MAX_SPLIT_SIZE                     \
+  _(" --max-split-size=SIZE        Force aria2 to split downloads after this size.\n" \
+    "                              Some server throttles downloads after certain size.\n" \
+    "                              This option can workaround such limitation.")
 #define TEXT_CONDITIONAL_GET                    \
   _(" --conditional-get[=true|false] Download file only when the local file is older\n" \
     "                              than remote file. Currently, this function has\n" \

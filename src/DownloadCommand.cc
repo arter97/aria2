@@ -81,6 +81,8 @@ DownloadCommand::DownloadCommand(
     : AbstractCommand(cuid, req, fileEntry, requestGroup, e, s,
                       socketRecvBuffer),
       startupIdleTime_(10),
+      downloadedSize_(0),
+      maxSplitSize_(getOption()->getAsInt(PREF_MAX_SPLIT_SIZE)),
       lowestDownloadSpeedLimit_(0),
       pieceHashValidationEnabled_(false)
 {
@@ -282,16 +284,23 @@ bool DownloadCommand::executeInternal()
       getSegmentMan()->cancelSegment(getCuid(), segment);
     }
     checkLowestDownloadSpeed();
-    // this unit is going to download another segment.
-    return prepareForNextSegment();
+
+    long downloadedSize = getDownloadedSize() + segment->getWrittenLength();
+    setDownloadedSize(downloadedSize);
+    if (maxSplitSize_ != 0 && downloadedSize >= maxSplitSize_) {
+      // re-connect
+      downloadedSize_ = 0;
+    } else {
+      // this unit is going to download another segment.
+      return prepareForNextSegment();
+    }
   }
-  else {
-    checkLowestDownloadSpeed();
-    setWriteCheckSocketIf(getSocket(), shouldEnableWriteCheck());
-    checkSocketRecvBuffer();
-    addCommandSelf();
-    return false;
-  }
+
+  checkLowestDownloadSpeed();
+  setWriteCheckSocketIf(getSocket(), shouldEnableWriteCheck());
+  checkSocketRecvBuffer();
+  addCommandSelf();
+  return false;
 }
 
 bool DownloadCommand::shouldEnableWriteCheck()

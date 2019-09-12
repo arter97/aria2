@@ -57,6 +57,8 @@ private:
 
   int lowestDownloadSpeedLimit_;
 
+  long downloadedSize_;
+
   bool pieceHashValidationEnabled_;
 
   bool sinkFilterOnly_;
@@ -96,6 +98,12 @@ public:
   {
     return streamFilter_;
   }
+
+  const int maxSplitSize_;
+
+  long getDownloadedSize() const { return downloadedSize_; }
+
+  void setDownloadedSize(long size) { downloadedSize_ = size; }
 
   void installStreamFilter(std::unique_ptr<StreamFilter> streamFilter);
 

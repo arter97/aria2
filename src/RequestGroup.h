@@ -163,6 +163,8 @@ private:
 
   int resumeFailureCount_;
 
+  long totalDownloadedSize_;
+
   HaltReason haltReason_;
 
   error_code::Value lastErrorCode_;
@@ -487,6 +489,10 @@ public:
   RequestGroupMan* getRequestGroupMan() { return requestGroupMan_; }
 
   int getResumeFailureCount() const { return resumeFailureCount_; }
+
+  long getTotalDownloadedSize() const { return totalDownloadedSize_; }
+
+  void setTotalDownloadedSize(long size) { totalDownloadedSize_ = size; }
 
   void increaseResumeFailureCount() { ++resumeFailureCount_; }
 
